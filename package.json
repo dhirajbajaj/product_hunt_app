@@ -6,9 +6,9 @@
   "private": true,
   "dependencies": {
     "@babel/core": "^7",
-    "babel-loader": "^8",
     "@babel/preset-env": "^7",
     "@babel/preset-react": "^7",
+    "babel-loader": "^8",
     "react": "^16.10",
     "react-dom": "^16.10",
     "react-fontawesome": "^1.6.1",
