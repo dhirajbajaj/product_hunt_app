@@ -1,47 +1,45 @@
 var path = require("path");
 var webpack = require("webpack");
 
-var plugins = [];  //plugins for both dev and production
-var devPlugins = [];  //plugins for dev
+var plugins = []; //plugins for both dev and production
+var devPlugins = []; //plugins for dev
 
 var prodPlugins = [
   new webpack.DefinePlugin({
-    'process.env': {
-      'NODE_ENV': JSON.stringify('production')
-    }
-  }),
-  new webpack.optimize.UglifyJsPlugin({
-    compress: {
-      warnings: true
+    "process.env": {
+      NODE_ENV: JSON.stringify("production")
     }
   })
 ];
 
 plugins = plugins.concat(
-  process.env.NODE_ENV === 'production' ? prodPlugins : devPlugins
+  process.env.NODE_ENV === "production" ? prodPlugins : devPlugins
 );
 
 module.exports = {
   context: __dirname,
   entry: "./frontend/product_hunt.jsx",
   output: {
-    path: path.resolve(__dirname, 'app', 'assets', 'javascripts'),
+    path: path.resolve(__dirname, "app", "assets", "javascripts"),
     filename: "bundle.js"
   },
   plugins: plugins,
+  optimization: {
+    minimize: process.env.NODE_ENV === "production"
+  },
   module: {
-    loaders: [
+    rules: [
       {
         test: [/\.jsx?$/, /\.js?$/],
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
         query: {
-          presets: ['es2015', 'react']
+          presets: ["@babel/preset-env", "@babel/preset-react"]
         }
       }
     ]
   },
-  devtool: 'source-maps',
+  devtool: "source-maps",
   resolve: {
     extensions: [".js", ".jsx", "*"]
   }
